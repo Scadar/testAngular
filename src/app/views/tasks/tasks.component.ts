@@ -10,8 +10,8 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class TasksComponent implements OnInit {
 
-  private displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
-  private dataSource: MatTableDataSource<Task>;
+  displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
+  dataSource: MatTableDataSource<Task>;
 
   tasks: Task[];
   constructor(private dataHandler: DataHandlerService) { }
@@ -33,6 +33,9 @@ export class TasksComponent implements OnInit {
   }
 
   getPriorityColor(task: Task): string {
+    if (task.completed){
+      return '#f8f9fa';
+    }
     if (task.priority && task.priority.color){
       return task.priority.color;
     }
