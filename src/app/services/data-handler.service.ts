@@ -9,16 +9,18 @@ import {BehaviorSubject, Subject} from 'rxjs';
 })
 export class DataHandlerService {
 
-  taskSubject = new BehaviorSubject<Task[]>(TestData.tasks);
+  tasksSubject = new BehaviorSubject<Task[]>(TestData.tasks);
   categorySubject = new BehaviorSubject<Category[]>(TestData.categories);
 
-  constructor() { }
+  constructor() {
+    this.fillTasks();
+  }
 
   fillTasks(): void{
-    this.taskSubject.next(TestData.tasks);
+    this.tasksSubject.next(TestData.tasks);
   }
 
   fillTasksByCategory(category: Category): void{
-    this.taskSubject.next(TestData.tasks.filter(task => task.category === category));
+    this.tasksSubject.next(TestData.tasks.filter(task => task.category === category));
   }
 }

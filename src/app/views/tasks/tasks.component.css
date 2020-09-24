@@ -3,39 +3,41 @@
   color: #797979;
 }
 
-.no-value{
-  color:#b7b7b7;
+.novalue {
+  color: #b7b7b7;
 }
 
-.col-id{
+
+.col-id {
   width: 4%;
   text-align: center;
 }
 
-.col-title{
+.col-title {
   width: 40%;
 }
 
-.col-priority{
+.col-priority {
   width: 10%;
 }
 
-.col-category{
+.col-category {
   width: 10%;
 }
 
-.col-select{
+
+.col-select {
   width: 3%;
 }
 
-.col-operations{
-  width: 3%;
+.col-operations {
+  width: 8%;
 }
 
-.col-color{
+.col-color {
   width: 1% !important;
 }
 
-.col-date{
+.col-date {
   width: 10% !important;
 }
