@@ -10,41 +10,33 @@ import {MatSort} from '@angular/material/sort';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit, AfterViewInit {
+export class TasksComponent implements OnInit{
 
-  // поля для таблицы (те, что отображают данные из задачи - должны совпадать с названиями переменных класса)
   displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
-  dataSource: MatTableDataSource<Task>; // контейнер - источник данных для таблицы
+  dataSource: MatTableDataSource<Task>;
 
-  // ссылки на компоненты таблицы
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-
-  @Input()
   tasks: Task[];
+
+  @Input('tasks')
+  set setTasks(tasks: Task[]){
+    this.tasks = tasks;
+    this.fillTable();
+  }
 
   constructor(private dataHandler: DataHandlerService) {
   }
 
   ngOnInit(): void {
-    // датасорс обязательно нужно создавать для таблицы, в него присваивается любой источник (БД, массивы, JSON и пр.)
     this.dataSource = new MatTableDataSource();
     this.fillTable();
   }
-
-  // в этом методе уже все проинциализировано, поэтому можно присваивать объекты (иначе может быть ошибка undefined)
-  ngAfterViewInit(): void {
-
-    this.addTableObjects();
-
-  }
-
 
   toggleTaskCompleted(task: Task): void {
     task.completed = !task.completed;
   }
 
-  // в зависимости от статуса задачи - вернуть цвет названия
   getPriorityColor(task: Task): string {
 
     // цвет завершенной задачи
@@ -60,16 +52,17 @@ export class TasksComponent implements OnInit, AfterViewInit {
 
   }
 
-  // показывает задачи с применением всех текущий условий (категория, поиск, фильтры и пр.)
+  // Настройка DataSource
   private fillTable(): void {
 
-    this.dataSource.data = this.tasks; // обновить источник данных (т.к. данные массива tasks обновились)
+    if (!this.dataSource){
+      return;
+    }
+
+    this.dataSource.data = this.tasks;
 
     this.addTableObjects();
 
-
-    // когда получаем новые данные..
-    // чтобы можно было сортировать по столбцам "категория" и "приоритет", т.к. там не примитивные типы, а объекты
     // @ts-ignore - показывает ошибку для типа даты, но так работает, т.к. можно возвращать любой тип
     this.dataSource.sortingDataAccessor = (task, colName) => {
 

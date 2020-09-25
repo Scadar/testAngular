@@ -12,6 +12,8 @@ export class AppComponent implements OnInit{
   title = 'angularProject';
   tasks: Task[];
   categories: Category[];
+  selectedCategory: Category;
+
   constructor(private dataHandler: DataHandlerService) {}
 
   ngOnInit(): void {
@@ -20,4 +22,15 @@ export class AppComponent implements OnInit{
   }
 
 
+  onSelectCategory(category: Category): void {
+    this.selectedCategory = category;
+    this.dataHandler.searchTasks(
+      this.selectedCategory,
+      null,
+      null,
+      null
+    ).subscribe((tasks: Task[]) => {
+      this.tasks = tasks;
+    });
+  }
 }

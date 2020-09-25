@@ -1,6 +1,7 @@
 <div class="wrapper ">
 
-  <app-categories [categories] = "categories"></app-categories>
+  <app-categories [categories] = "categories"
+                  (selectCategory)="onSelectCategory($event)"></app-categories>
 
 
   <div class="main-panel">
