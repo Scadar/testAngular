@@ -11,20 +11,28 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class EditTaskDialogComponent implements OnInit {
 
   constructor(
-    private dialogRef:MatDialogRef<EditTaskDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private date: [Task, string],
-    private dataHandler: DataHandlerService,
-    private dialog: MatDialog
+    private dialogRef: MatDialogRef<EditTaskDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private date: [Task, string]
   ) { }
 
-  private dialogTitle: string;
-  private task: Task;
+  dialogTitle: string;
+  task: Task;
+  tmpTitle: string;
 
   ngOnInit(): void {
     this.task = this.date[0];
     this.dialogTitle = this.date[1];
 
-    console.log(this.task);
+    this.tmpTitle = this.task.title;
   }
 
+  onConfirm(): void {
+    this.task.title = this.tmpTitle;
+
+    this.dialogRef.close(this.task);
+  }
+
+  onCancel(): void {
+    this.dialogRef.close(null);
+  }
 }
