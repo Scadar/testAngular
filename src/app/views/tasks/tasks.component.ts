@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import { Task } from 'src/app/model/Task';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {MatTableDataSource} from '@angular/material/table';
@@ -20,19 +20,16 @@ export class TasksComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
 
-
+  @Input()
   tasks: Task[];
 
   constructor(private dataHandler: DataHandlerService) {
   }
 
   ngOnInit(): void {
-    this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
-
     // датасорс обязательно нужно создавать для таблицы, в него присваивается любой источник (БД, массивы, JSON и пр.)
     this.dataSource = new MatTableDataSource();
-
-    this.refreshTable();
+    this.fillTable();
   }
 
   // в этом методе уже все проинциализировано, поэтому можно присваивать объекты (иначе может быть ошибка undefined)
@@ -64,7 +61,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
   }
 
   // показывает задачи с применением всех текущий условий (категория, поиск, фильтры и пр.)
-  private refreshTable(): void {
+  private fillTable(): void {
 
     this.dataSource.data = this.tasks; // обновить источник данных (т.к. данные массива tasks обновились)
 
