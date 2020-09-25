@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { Task } from 'src/app/model/Task';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {MatTableDataSource} from '@angular/material/table';
@@ -24,6 +24,9 @@ export class TasksComponent implements OnInit{
     this.tasks = tasks;
     this.fillTable();
   }
+
+  @Output()
+  selectTask = new EventEmitter<Task>();
 
   constructor(private dataHandler: DataHandlerService) {
   }
@@ -89,5 +92,9 @@ export class TasksComponent implements OnInit{
   private addTableObjects(): void {
     this.dataSource.sort = this.sort; // компонент для сортировки данных (если необходимо)
     this.dataSource.paginator = this.paginator; // обновить компонент постраничности (кол-во записей, страниц)
+  }
+
+  onClickTask(task: Task): void{
+    this.selectTask.emit(task);
   }
 }
