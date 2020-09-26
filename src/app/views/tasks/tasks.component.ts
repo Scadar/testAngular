@@ -29,6 +29,8 @@ export class TasksComponent implements OnInit{
 
   @Output()
   selectTask = new EventEmitter<Task>();
+  @Output()
+  deleteTask = new EventEmitter<Task>();
 
   constructor(private dataHandler: DataHandlerService,
               private dialog: MatDialog) {
@@ -83,7 +85,6 @@ export class TasksComponent implements OnInit{
         case 'date': {
           return task.date ? task.date : null;
         }
-
         case 'title': {
           return task.title;
         }
@@ -100,6 +101,10 @@ export class TasksComponent implements OnInit{
   openEditTaskDialog(task: Task): void{
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {data: [task, 'Редактировать задачи'], autoFocus: false});
     dialogRef.afterClosed().subscribe(result => {
+      if (result === 'delete'){
+        this.deleteTask.emit(task);
+        return;
+      }
       if (result as Task){
         this.selectTask.emit(task);
         return;

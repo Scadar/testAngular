@@ -3,8 +3,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import { Task } from 'src/app/model/Task';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Category} from '../../model/Category';
-import {TestData} from '../../data/TestData';
 import {Priority} from '../../model/Priority';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-edit-task-dialog',
@@ -16,7 +16,8 @@ export class EditTaskDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EditTaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private date: [Task, string],
-    private dataHandler: DataHandlerService
+    private dataHandler: DataHandlerService,
+    private dialog: MatDialog
   ) { }
 
   categories: Category[];
@@ -49,5 +50,22 @@ export class EditTaskDialogComponent implements OnInit {
 
   onCancel(): void {
     this.dialogRef.close(null);
+  }
+
+  delete(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Подтвердить действие',
+        message: `Вы дейтсвительно хотите удалить задачу: "${this.task.title}"?`
+      },
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        console.log("edit-task-dialog.component");
+      }
+    });
   }
 }
