@@ -6,15 +6,32 @@
     <mat-label>Название*</mat-label>
 
     <input #inputTitle
-            matInput
-            [(ngModel)]="tmpTitle"
-            (keydown.enter)="onConfirm()">
+           matInput
+           [(ngModel)]="tmpTitle"
+           (keydown.enter)="onConfirm()">
     <button *ngIf="tmpTitle.trim().length > 0"
             mat-button matSuffix mat-icon-button aria-label="Clear"
             (click)="tmpTitle=''" class="size25">
       <mat-icon>clear</mat-icon>
     </button>
+  </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Укажите категорию</mat-label>
+
+    <mat-select [(ngModel)]="tmpCategory">
+      <mat-option [value]="null">Без категории</mat-option>
+      <mat-option *ngFor="let cat of categories" [value]="cat">{{cat.title}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Укажите приоритет</mat-label>
+
+    <mat-select [(ngModel)]="tmpPriority">
+      <mat-option [value]="null">Без приоритета</mat-option>
+      <mat-option *ngFor="let prior of priorities" [value]="prior">{{prior.title}}</mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
