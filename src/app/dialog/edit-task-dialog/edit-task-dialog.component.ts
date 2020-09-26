@@ -64,8 +64,14 @@ export class EditTaskDialogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        console.log("edit-task-dialog.component");
+        this.dialogRef.close('delete');
       }
     });
+  }
+
+  onChangeStatus(): void {
+    console.log("qweqwe");
+    this.task.completed = !this.task.completed;
+    this.dialogRef.close(this.task);
   }
 }
