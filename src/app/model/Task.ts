@@ -8,10 +8,10 @@ export class Task{
   completed: boolean;
   priority?: Priority;
   category?: Category;
-  date?: Data;
+  date?: Date;
 
 
-  constructor(id: number, title: string, completed: boolean, priority?: Priority, category?: Category, date?: Data) {
+  constructor(id: number, title: string, completed: boolean, priority?: Priority, category?: Category, date?: Date) {
     this.id = id;
     this.title = title;
     this.completed = completed;
