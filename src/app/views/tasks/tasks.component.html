@@ -61,8 +61,6 @@
         </td>
       </ng-container>
 
-      переписать урок - указать, что это структурные директивы - изменяют поведение стандартного тега
-      вместе с атрибутом дают эффект -
 
       <!--категория-->
       <ng-container matColumnDef="category">
@@ -70,6 +68,7 @@
         <td *matCellDef="let task" class="col-category"
             [ngClass]="{'completed': task.completed, 'novalue': task.category == null}"
             mat-cell
+            (click)="task.category && onSelectCategory(task.category)"
         >
 
           {{task.category ? task.category.title : "Без категории"}}
@@ -83,7 +82,7 @@
         <td class="col-operations"
             mat-cell
             *matCellDef="let task"
-            [class.completed]="task.completed">
+            [class.completed]="task.completed" >
           <button mat-icon-button (click)="openDeleteDialog(task)" class="delete-icon">
             <mat-icon aria-hidden="false">delete</mat-icon>
           </button>

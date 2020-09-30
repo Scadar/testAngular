@@ -1,5 +1,5 @@
 .completed {
-  text-decoration: line-through;
+  text-decoration: line-through !important;
   color: #797979;
 }
 
@@ -23,6 +23,8 @@
 
 .col-category {
   width: 10%;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 
