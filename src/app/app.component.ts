@@ -59,4 +59,15 @@ export class AppComponent implements OnInit{
       });
     });
   }
+
+  onDeleteCategory(category: Category): void {
+    this.dataHandler.deleteCategory(category.id).subscribe((cat) => {
+      this.selectedCategory = null;
+      this.onSelectCategory(this.selectedCategory);
+    });
+  }
+
+  onUpdateCategory(category: Category): void {
+    this.dataHandler.updateCategory(category)
+  }
 }
