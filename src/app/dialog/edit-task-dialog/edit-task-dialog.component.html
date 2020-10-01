@@ -67,7 +67,7 @@
         Отмена
       </button>
     </div>
-    <div class="col-md-7 col-12 text-right">
+    <div class="col-md-7 col-12 text-right" *ngIf="!(task.id === null || task.id === 0)">
       <button mat-button (click)="onChangeStatus()">
         <span *ngIf="task.completed">Активировать</span>
         <span *ngIf="!task.completed">Завершить задачу</span>

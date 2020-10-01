@@ -20,3 +20,21 @@
 .edit-category-icon{
   color: #dadada;
 }
+
+.nav-title {
+  display: inline-block;
+  width: 85%;
+  text-align: center;
+  font-size: 21px;
+}
+
+span.add-icon-area {
+  display: inline-block;
+  width: 10%;
+  text-align: left;
+}
+
+#categories{
+  width: 100%;
+  overflow-x: hidden;
+}
