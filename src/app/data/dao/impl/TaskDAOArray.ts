@@ -57,7 +57,15 @@ export class TaskDAOArray implements TaskDAO{
     if (category != null){
       allTasks = allTasks.filter(task => task.category === category);
     }
-
+    if (searchText != null){
+      allTasks = allTasks.filter(task => task.title.toLowerCase().includes(searchText.toLowerCase()));
+    }
+    if (status != null){
+      allTasks = allTasks.filter(task => task.completed === status);
+    }
+    if (priority != null){
+      allTasks = allTasks.filter(task => task.priority === priority);
+    }
     return allTasks;
   }
 }

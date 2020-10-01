@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {EditTaskDialogComponent} from '../../dialog/edit-task-dialog/edit-task-dialog.component';
 import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
 import {Category} from '../../model/Category';
+import {Priority} from '../../model/Priority';
 
 @Component({
   selector: 'app-tasks',
@@ -16,18 +17,26 @@ import {Category} from '../../model/Category';
 })
 export class TasksComponent implements OnInit{
 
-  displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
-  dataSource: MatTableDataSource<Task>;
-
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  tasks: Task[];
-
   @Input('tasks')
   set setTasks(tasks: Task[]){
     this.tasks = tasks;
     this.fillTable();
   }
+
+  constructor(private dataHandler: DataHandlerService,
+              private dialog: MatDialog) {
+  }
+
+  displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
+  dataSource: MatTableDataSource<Task>;
+
+  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+
+  tasks: Task[];
+
+  @Input()
+  priorities: Priority[];
 
   @Output()
   updateTask = new EventEmitter<Task>();
@@ -35,10 +44,16 @@ export class TasksComponent implements OnInit{
   deleteTask = new EventEmitter<Task>();
   @Output()
   selectCategory = new EventEmitter<Category>();
+  @Output()
+  filterByTitle = new EventEmitter<string>();
+  @Output()
+  filterByStatus = new EventEmitter<boolean>();
+  @Output()
+  filterByPriorities = new EventEmitter<Priority>();
 
-  constructor(private dataHandler: DataHandlerService,
-              private dialog: MatDialog) {
-  }
+  searchTaskText: string;
+  selectedStatusFilter: boolean;
+  selectedPriorityFilter: Priority;
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
@@ -49,18 +64,17 @@ export class TasksComponent implements OnInit{
 
     // цвет завершенной задачи
     if (task.completed) {
-      return '#F8F9FA'; // TODO вынести цвета в константы (magic strings, magic numbers)
+      return '#F8F9FA';
     }
 
     if (task.priority && task.priority.color) {
       return task.priority.color;
     }
 
-    return '#fff'; // TODO вынести цвета в константы (magic strings, magic numbers)
+    return '#fff';
 
   }
 
-  // Настройка DataSource
   private fillTable(): void {
 
     if (!this.dataSource){
@@ -115,7 +129,7 @@ export class TasksComponent implements OnInit{
   openDeleteDialog(task: Task): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
-      data:{dialogTitle: 'Подтвердите удаление', message: `Вы действительно хотите удалить задачу: ${task.title}?`},
+      data: {dialogTitle: 'Подтвердите удаление', message: `Вы действительно хотите удалить задачу: ${task.title}?`},
       autoFocus: false
     });
 
@@ -133,5 +147,23 @@ export class TasksComponent implements OnInit{
 
   onSelectCategory(category: Category): void {
     this.selectCategory.emit(category);
+  }
+
+  onFilterByTitle(): void {
+    this.filterByTitle.emit(this.searchTaskText);
+  }
+
+  onFilterByStatus(value: boolean): void {
+    if (value !== this.selectedStatusFilter){
+      this.selectedStatusFilter = value;
+      this.filterByStatus.emit(this.selectedStatusFilter);
+    }
+  }
+
+  onFilterByPriority(priority: Priority): void {
+    if (priority !== this.selectedPriorityFilter){
+      this.selectedPriorityFilter = priority;
+      this.filterByPriorities.emit(this.selectedPriorityFilter);
+    }
   }
 }
