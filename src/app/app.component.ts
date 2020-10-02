@@ -3,6 +3,7 @@ import { Task } from './model/Task';
 import {DataHandlerService} from './services/data-handler.service';
 import {Category} from './model/Category';
 import {Priority} from './model/Priority';
+import {TestData} from './data/TestData';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit{
 
 
   onSelectCategory(category: Category): void {
+
     this.selectedCategory = category;
     this.dataHandler.searchTasks(
       this.selectedCategory,

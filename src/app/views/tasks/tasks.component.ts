@@ -15,7 +15,7 @@ import {Priority} from '../../model/Priority';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit{
+export class TasksComponent implements OnInit, AfterViewInit{
 
   @Input('tasks')
   set setTasks(tasks: Task[]){
@@ -62,7 +62,6 @@ export class TasksComponent implements OnInit{
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
     this.onSelectCategory(null);
-    this.fillTable();
   }
 
   getPriorityColor(task: Task): string {
@@ -182,5 +181,9 @@ export class TasksComponent implements OnInit{
         this.addTask.emit(task);
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.fillTable();
   }
 }
