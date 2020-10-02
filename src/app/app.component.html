@@ -16,7 +16,11 @@
     <div class="content">
       <div class="container-fluid">
 
-        <app-stat></app-stat>
+        <app-stat
+          [totalTaskInCategory]="totalTaskCountInCategory"
+          [completeTaskInCategory]="completeTaskCountInCategory"
+          [uncompletedTaskInCategory]="uncompletedTaskCountInCategory"
+        ></app-stat>
 
         <div class="row">
 
@@ -26,7 +30,7 @@
                        [priorities]="priorities"
                        [selectedCategory]="selectedCategory"
 
-                       (updateTask)="onSelectTask($event)"
+                       (updateTask)="onUpdateTask($event)"
                        (deleteTask)="onDeleteTask($event)"
                        (selectCategory)="onSelectCategory($event)"
                        (addTask)="onAddTask($event)"

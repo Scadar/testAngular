@@ -63,8 +63,8 @@
   <div class="col-md-3 col-sm-12 text-right">
     <div class="row">
       <div class="text-left col-6">
-        <button (click)="$event.stopPropagation(); onFilterByStatus(null); searchTaskText = ''; onFilterByTitle()"
-                *ngIf="selectedStatusFilter != null || (searchTaskText != null && searchTaskText.trim() != '')"
+        <button (click)="$event.stopPropagation(); onFilterByStatus(null); searchTaskText = ''; onFilterByTitle(); onFilterByPriority(null)"
+                *ngIf="selectedStatusFilter != null || (searchTaskText != null && searchTaskText.trim() != '') || selectedPriorityFilter != null"
                 aria-label="Clear"
                 mat-button
                 matSuffix>
