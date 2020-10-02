@@ -25,8 +25,14 @@ export class CategoriesComponent implements OnInit {
   updateCategory = new EventEmitter<Category>();
   @Output()
   deleteCategory = new EventEmitter<Category>();
+  @Output()
+  addCategory = new EventEmitter<Category>();
+  @Output()
+  searchCategory = new EventEmitter<string>();
 
   indexMouseMove: number;
+  searchCategoryTitle: string;
+
 
   constructor(private dataHandler: DataHandlerService,
               private dialog: MatDialog) {
@@ -60,6 +66,25 @@ export class CategoriesComponent implements OnInit {
         return;
       }
     });
+  }
+
+  openAddCategoryDialog(): void {
+    const category = new Category(null, '');
+    const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
+      data: [category, 'Добавление категории']
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.addCategory.emit(category);
+      }
+    });
+  }
+
+  search(): void {
+    if (this.searchCategoryTitle === null){
+      return;
+    }
+    this.searchCategory.emit(this.searchCategoryTitle);
   }
 }
 

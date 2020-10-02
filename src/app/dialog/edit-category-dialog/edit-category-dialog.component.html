@@ -28,7 +28,7 @@
       Отмена
     </button>
   </div>
-  <div class="col-md-4 col-12 text-right">
+  <div class="col-md-4 col-12 text-right" *ngIf="!(category.id === null || category.id === 0)">
     <button mat-button class="red" (click)="delete()">Удалить задачу</button>
   </div>
 

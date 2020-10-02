@@ -38,3 +38,15 @@ span.add-icon-area {
   width: 100%;
   overflow-x: hidden;
 }
+
+.example-full-width {
+  width: 80% !important;
+  margin-left: 10%;
+}
+
+.nothing-found {
+  margin-top: 30px;
+  font-size: 20px;
+  color: rgba(74,74,74,0.9);
+  text-align: center;
+}

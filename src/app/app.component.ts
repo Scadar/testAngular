@@ -18,7 +18,7 @@ export class AppComponent implements OnInit{
   statusFilter: boolean;
   searchTaskText = '';
   searchPriority: Priority;
-
+  searchCategoryText: string;
   constructor(private dataHandler: DataHandlerService) {}
 
   ngOnInit(): void {
@@ -70,12 +70,15 @@ export class AppComponent implements OnInit{
   onDeleteCategory(category: Category): void {
     this.dataHandler.deleteCategory(category.id).subscribe((cat) => {
       this.selectedCategory = null;
-      this.onSelectCategory(this.selectedCategory);
+      this.onSelectCategory(null);
+      this.onSearchCategory(this.searchCategoryText);
     });
   }
 
   onUpdateCategory(category: Category): void {
-    this.dataHandler.updateCategory(category)
+    this.dataHandler.updateCategory(category).subscribe(() => {
+      this.onSelectCategory(this.selectedCategory);
+    });
   }
 
   onFilterByStatus(status: boolean): void {
@@ -109,5 +112,20 @@ export class AppComponent implements OnInit{
     this.dataHandler.addTask(task).subscribe(result => {
       this.updateTasks();
     });
+  }
+
+  onAddCategory(category: Category): void {
+    this.dataHandler.addCategory(category).subscribe(result => {
+      this.updateCategories();
+    });
+  }
+
+  private updateCategories(): void {
+    this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
+  }
+
+  onSearchCategory(text: string): void {
+    this.searchCategoryText = text;
+    this.dataHandler.searchCategories(this.searchCategoryText).subscribe(categories => this.categories = categories);
   }
 }

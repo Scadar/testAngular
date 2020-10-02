@@ -6,14 +6,18 @@ import {TestData} from '../../TestData';
 
 export class CategoryDAOArray implements CategoryDAO{
 
-  add(T): Observable<Category> {
-    return undefined;
+  add(category: Category): Observable<Category> {
+    if (category.id === null || category.id === 0){
+      category.id = this.getLastCategoryId();
+    }
+    TestData.categories.push(category);
+    return of(category);
   }
 
   delete(id: number): Observable<Category> {
 
     TestData.tasks.forEach(task => {
-      if(task.category && task.category.id === id){
+      if (task.category && task.category.id === id){
         task.category = null;
       }
     });
@@ -32,7 +36,7 @@ export class CategoryDAOArray implements CategoryDAO{
   }
 
   search(title: string): Observable<Category[]> {
-    return undefined;
+    return of(TestData.categories.filter(cat => cat.title.toLowerCase().includes(title.toLowerCase())));
   }
 
   update(category): Observable<Category> {
@@ -41,4 +45,7 @@ export class CategoryDAOArray implements CategoryDAO{
     return of(category);
   }
 
+  private getLastCategoryId(): number {
+    return Math.max.apply(Math, TestData.categories.map(c => c.id));
+  }
 }

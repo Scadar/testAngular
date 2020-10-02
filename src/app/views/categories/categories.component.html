@@ -4,7 +4,7 @@
           Категории
     </span>
     <span class="add-icon-area">
-      <button mat-icon-button class="add-icon pointer">
+      <button mat-icon-button class="add-icon pointer" (click)="openAddCategoryDialog()">
         <mat-icon>add</mat-icon>
       </button>
     </span>
@@ -12,7 +12,29 @@
   <div class="sidebar-wrapper">
     <ul class="nav">
 
-      <li class="nav-item category" (click)="showTasksByCategory(null)" [class.active]="selectedCategory == null">\
+      <div class="search-category-area">
+        <mat-form-field class="example-full-width">
+          <input
+              #inputSearchCategory
+              (keydown.escape)="searchCategoryTitle = ''; search()"
+              (keyup)="search()"
+              [(ngModel)]="searchCategoryTitle"
+
+              matInput maxlength="256" placeholder="Поиск категории">
+          <button (click)="searchCategoryTitle = ''; search()"
+                  *ngIf="inputSearchCategory.value.trim().length > 0"
+                  aria-label="Clear"
+                  mat-button
+                  mat-icon-button
+                  matSuffix
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+
+      <li class="nav-item category" (click)="showTasksByCategory(null)" [class.active]="selectedCategory == null">
         <a class="nav-link pointer">
           <span class="all-category-title">Все</span>
         </a>
@@ -40,5 +62,8 @@
         </a>
       </li>
     </ul>
+    <div *ngIf="categories.length <= 0" class="nothing-found">
+      Ничего не найдено
+    </div>
   </div>
 </div>
