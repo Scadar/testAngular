@@ -79,4 +79,16 @@ export class DataHandlerService {
   getUncompletedTotalCount(): Observable<number> {
     return this.taskDAOArray.getUncompletedCountInCategory(null);
   }
+
+  deletePriority(id: number): Observable<Priority> {
+    return this.priorityDAOArray.delete(id);
+  }
+
+  updatePriority(priority: Priority): Observable<Priority> {
+    return this.priorityDAOArray.update(priority);
+  }
+
+  addPriority(priority: Priority): Observable<Priority> {
+    return this.priorityDAOArray.add(priority);
+  }
 }

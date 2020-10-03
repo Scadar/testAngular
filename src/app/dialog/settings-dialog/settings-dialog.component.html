@@ -2,7 +2,11 @@
   <p mat-dialog-title class="settings-title width-subtitle">Настройка приоритетов</p>
   <p class="little subtitle">*При изменение цвета он сразу вступает в силу</p>
 
-  <app-priorities [priorities]="priorities">
+  <app-priorities [priorities]="priorities"
+                  (deletePriority)="onDeletePriority($event)"
+                  (updatePriority)="onUpdatePriority($event)"
+                  (addPriority)="onAddPriority($event)"
+  >
 
   </app-priorities>
 </mat-dialog-content>
