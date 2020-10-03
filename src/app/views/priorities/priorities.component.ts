@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Priority} from '../../model/Priority';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-priorities',
@@ -7,9 +9,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrioritiesComponent implements OnInit {
 
-  constructor() { }
+  static defaultColor = '#fff';
+
+  @Input()
+  priorities: Priority[];
+
+  @Output()
+  deletePriority = new EventEmitter<Priority>();
+  @Output()
+  updatePriority = new EventEmitter<Priority>();
+  @Output()
+  addPriority = new EventEmitter<Priority>();
+
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+
+  onEditPriority(priority: Priority): void {
+
+  }
+
+  delete(priority: Priority): void {
+
+  }
+
+  onAddPriority(): void {
+
+  }
 }
