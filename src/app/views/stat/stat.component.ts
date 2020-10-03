@@ -7,6 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class StatComponent implements OnInit {
 
+  @Input()
+  showStat: boolean;
 
   @Input()
   totalTaskInCategory: number;

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { Task } from './model/Task';
+import {Task} from './model/Task';
 import {DataHandlerService} from './services/data-handler.service';
 import {Category} from './model/Category';
 import {Priority} from './model/Priority';
@@ -11,7 +11,7 @@ import {zip} from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'angularProject';
   tasks: Task[];
   categories: Category[];
@@ -27,8 +27,10 @@ export class AppComponent implements OnInit{
   completeTaskCountInCategory: number;
   uncompletedTaskCountInCategory: number;
   uncompletedTotalTaskCountInCategory: number;
+  showStat = true;
 
-  constructor(private dataHandler: DataHandlerService) {}
+  constructor(private dataHandler: DataHandlerService) {
+  }
 
   ngOnInit(): void {
     this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
@@ -51,7 +53,7 @@ export class AppComponent implements OnInit{
     });
   }
 
-  onDeleteTask(task: Task): void{
+  onDeleteTask(task: Task): void {
     this.dataHandler.deleteTask(task.id).subscribe((cat) => {
       this.updateTasksAndStat();
     });
@@ -119,22 +121,26 @@ export class AppComponent implements OnInit{
     this.dataHandler.searchCategories(this.searchCategoryText).subscribe(categories => this.categories = categories);
   }
 
-  updateTasksAndStat(): void{
+  updateTasksAndStat(): void {
     this.updateTasks();
     this.updateStat();
   }
 
-  private updateStat(): void{
+  private updateStat(): void {
     zip(
       this.dataHandler.getTotalCountInCategory(this.selectedCategory),
       this.dataHandler.getCompletedCountInCategory(this.selectedCategory),
       this.dataHandler.getUncompletedCountInCategory(this.selectedCategory),
       this.dataHandler.getUncompletedTotalCount())
-      .subscribe( array => {
+      .subscribe(array => {
         this.totalTaskCountInCategory = array[0];
         this.completeTaskCountInCategory = array[1];
         this.uncompletedTaskCountInCategory = array[2];
         this.uncompletedTotalTaskCountInCategory = array[3];
       });
+  }
+
+  onToggleStat(value: boolean): void {
+    this.showStat = value;
   }
 }

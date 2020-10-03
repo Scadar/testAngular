@@ -29,6 +29,7 @@ import { FooterComponent } from './views/footer/footer.component';
 import { HeaderComponent } from './views/header/header.component';
 import { StatComponent } from './views/stat/stat.component';
 import { StatCardComponent } from './views/stat/stat-card/stat-card.component';
+import { PrioritiesComponent } from './views/priorities/priorities.component';
 
 registerLocaleData(localeRu);
 
@@ -44,7 +45,8 @@ registerLocaleData(localeRu);
     FooterComponent,
     HeaderComponent,
     StatComponent,
-    StatCardComponent
+    StatCardComponent,
+    PrioritiesComponent
   ],
   imports: [
     BrowserModule,
