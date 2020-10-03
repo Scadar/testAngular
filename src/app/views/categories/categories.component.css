@@ -1,5 +1,5 @@
 .edit-category-icon-area{
-  width: 15%;
+  width: 10%;
   display: inline-block;
   text-align: left;
   font-size: 13px;
@@ -12,7 +12,7 @@
 }
 
 .category-title{
-  width: 70%;
+  width: 60%;
   display: inline-block;
   font-size: 16px;
 }
@@ -53,4 +53,14 @@ span.add-icon-area {
 
 .sidebar-background{
   background-image: url(../../../assets/img/sidebar-1.jpg) !important;
+}
+
+.uncompleted-count {
+  background-color: #eaeaea;
+  border-radius: 3px;
+  padding: 5px;
+  color: black;
+  width: 15%;
+  display: inline-block;
+  text-align: center;
 }

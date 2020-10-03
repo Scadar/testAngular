@@ -37,6 +37,7 @@
       <li class="nav-item category" (click)="showTasksByCategory(null)" [class.active]="selectedCategory == null">
         <a class="nav-link pointer">
           <span class="all-category-title">Все</span>
+          <span class="uncompleted-total">{{allUnfinishedTask}}</span>
         </a>
       </li>
 
@@ -51,11 +52,13 @@
       >
         <a class="nav-link">
           <span class="category-title">{{category.title}}</span>
+          <mat-icon></mat-icon>
+          <span class="uncompleted-count">{{categoryMap.get(category)}}</span>
           <span class="edit-category-icon-area">
             <mat-icon
               *ngIf="indexMouseMove === index"
               (click)="$event.stopPropagation(); openEditDialog(category)"
-              class="edit-category-icon">
+              class="edit-category-icon right">
               edit
             </mat-icon>
           </span>

@@ -15,7 +15,7 @@ import {Priority} from '../../model/Priority';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit, AfterViewInit{
+export class TasksComponent implements OnInit{
 
   @Input('tasks')
   set setTasks(tasks: Task[]){
@@ -25,6 +25,8 @@ export class TasksComponent implements OnInit, AfterViewInit{
 
   constructor(private dataHandler: DataHandlerService,
               private dialog: MatDialog) {
+    this.fillTable();
+
   }
 
   displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
@@ -183,7 +185,4 @@ export class TasksComponent implements OnInit, AfterViewInit{
     });
   }
 
-  ngAfterViewInit(): void {
-    this.fillTable();
-  }
 }

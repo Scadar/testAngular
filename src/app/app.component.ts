@@ -3,7 +3,6 @@ import {Task} from './model/Task';
 import {DataHandlerService} from './services/data-handler.service';
 import {Category} from './model/Category';
 import {Priority} from './model/Priority';
-import {TestData} from './data/TestData';
 import {zip} from 'rxjs';
 
 @Component({
@@ -28,6 +27,9 @@ export class AppComponent implements OnInit {
   uncompletedTaskCountInCategory: number;
   uncompletedTotalTaskCountInCategory: number;
   showStat = true;
+
+  categoryMap = new Map<Category, number>();
+  allFinishedTask = 0;
 
   constructor(private dataHandler: DataHandlerService) {
   }
@@ -64,12 +66,14 @@ export class AppComponent implements OnInit {
       this.selectedCategory = null;
       this.onSelectCategory(null);
       this.onSearchCategory(this.searchCategoryText);
+      this.fillCategoryMap();
     });
   }
 
   onUpdateCategory(category: Category): void {
     this.dataHandler.updateCategory(category).subscribe(() => {
       this.onSelectCategory(this.selectedCategory);
+      this.fillCategoryMap();
     });
   }
 
@@ -89,6 +93,8 @@ export class AppComponent implements OnInit {
   }
 
   private updateTasks(): void {
+    this.fillCategoryMap();
+
     this.dataHandler.searchTasks(
       this.selectedCategory,
       this.searchTaskText,
@@ -99,6 +105,22 @@ export class AppComponent implements OnInit {
     });
   }
 
+
+  private fillCategoryMap(): void{
+    if (this.categoryMap){
+      this.categoryMap.clear();
+      this.allFinishedTask = 0;
+    }
+    this.categories.forEach(cat => {
+      this.dataHandler.getUncompletedCountInCategory(cat).subscribe(
+        count => {
+          this.categoryMap.set(cat, count);
+          this.allFinishedTask += count;
+        }
+      );
+    });
+    console.log(this.allFinishedTask);
+  }
 
   onAddTask(task: Task): void {
     this.dataHandler.addTask(task).subscribe(result => {
@@ -114,6 +136,7 @@ export class AppComponent implements OnInit {
 
   private updateCategories(): void {
     this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
+    this.fillCategoryMap();
   }
 
   onSearchCategory(text: string): void {

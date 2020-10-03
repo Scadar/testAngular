@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {EditTaskDialogComponent} from '../../dialog/edit-task-dialog/edit-task-dialog.component';
 import {Task} from '../../model/Task';
 import {EditCategoryDialogComponent} from '../../dialog/edit-category-dialog/edit-category-dialog.component';
+import {reduce} from 'rxjs/operators';
 
 @Component({
   selector: 'app-categories',
@@ -20,6 +21,10 @@ export class CategoriesComponent implements OnInit {
   selectCategory = new EventEmitter<Category>();
   @Input()
   selectedCategory: Category;
+  @Input()
+  categoryMap = new Map<Category, number>();
+  @Input()
+  allUnfinishedTask: number;
 
   @Output()
   updateCategory = new EventEmitter<Category>();
